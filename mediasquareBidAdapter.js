@@ -56,6 +56,7 @@ export const spec = {
           consent_string: bidderRequest.gdprConsent.consentString,
           consent_required: bidderRequest.gdprConsent.gdprApplies
         };
+      }
       if (bidderRequest.uspConsent)
         payload.uspConsent = uspConsent;
       if (bidderRequest.schain)
