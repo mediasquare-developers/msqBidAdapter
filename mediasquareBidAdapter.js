@@ -61,7 +61,6 @@ export const spec = {
       if (bidderRequest.schain)
         payload.schain = bidderRequest.schain;
     };
-    if (
     if (test) { payload.debug = true; }
     const payloadString = JSON.stringify(payload);
     return {
