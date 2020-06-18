@@ -58,7 +58,7 @@ export const spec = {
         };
       }
       if (bidderRequest.uspConsent)
-        payload.uspConsent = uspConsent;
+        payload.uspConsent = bidderRequest.uspConsent;
       if (bidderRequest.schain)
         payload.schain = bidderRequest.schain;
     };
