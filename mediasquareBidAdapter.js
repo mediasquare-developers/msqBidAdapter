@@ -50,7 +50,7 @@ export const spec = {
       codes: codes,
       referer: encodeURIComponent(bidderRequest.refererInfo.referer)
     };
-    if (bidderRequest) { 
+    if (bidderRequest) { // modules informations (gdpr, ccpa, schain, userId)
       if (bidderRequest.gdprConsent) {
         payload.gdpr = {
           consent_string: bidderRequest.gdprConsent.consentString,
@@ -61,6 +61,8 @@ export const spec = {
         payload.uspConsent = bidderRequest.uspConsent;
       if (bidderRequest.schain)
         payload.schain = bidderRequest.schain;
+      if (bidderRequest.userId)
+        payload.userId = bidderRequest.userId;
     };
     if (test) { payload.debug = true; }
     const payloadString = JSON.stringify(payload);
