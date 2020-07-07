@@ -57,12 +57,9 @@ export const spec = {
           consent_required: bidderRequest.gdprConsent.gdprApplies
         };
       }
-      if (bidderRequest.uspConsent)
-        payload.uspConsent = bidderRequest.uspConsent;
-      if (bidderRequest.schain)
-        payload.schain = bidderRequest.schain;
-      if (bidderRequest.userId)
-        payload.userId = bidderRequest.userId;
+      if (bidderRequest.uspConsent) { payload.uspConsent = bidderRequest.uspConsent; }
+      if (bidderRequest.schain) { payload.schain = bidderRequest.schain; }
+      if (bidderRequest.userId) { payload.userId = bidderRequest.userId; }
     };
     if (test) { payload.debug = true; }
     const payloadString = JSON.stringify(payload);
@@ -122,24 +119,12 @@ export const spec = {
     if (serverResponses[0].body.hasOwnProperty('cookies') && typeof serverResponses[0].body.cookies === 'object') {
       return serverResponses[0].body.cookies;
     } else {
-      if (gdprConsent && typeof gdprConsent.consentString === 'string') {
-        if (typeof gdprConsent.gdprApplies === 'boolean') { params += `&gdpr=${Number(gdprConsent.gdprApplies)}&gdpr_consent=${gdprConsent.consentString}`; } else { params += `&gdpr_consent=${gdprConsent.consentString}`; }
-      }
-      if (uspConsent && typeof uspConsent === 'string')
-        params += '&uspConsent='+uspConsent
-      if (syncOptions.iframeEnabled) {
-        return {
-          type: 'iframe',
-          url: endpoint + BIDDER_ENDPOINT_SYNC + '?type=iframe' + params
-        };
-      }
-      if (syncOptions.pixelEnabled) {
-        return {
-          type: 'image',
-          url: endpoint + BIDDER_ENDPOINT_SYNC + '?type=pixel' + params
-        };
-      }
-      return false;
+      if (gdprConsent && typeof gdprConsent.consentString === 'string') { params += typeof gdprConsent.gdprApplies === 'boolean' ? `&gdpr=${Number(gdprConsent.gdprApplies)}&gdpr_consent=${gdprConsent.consentString}` : `&gdpr_consent=${gdprConsent.consentString}`; }
+      if (uspConsent && typeof uspConsent === 'string') { params += '&uspConsent=' + uspConsent }
+      return {
+        type: 'iframe',
+        url: endpoint + BIDDER_ENDPOINT_SYNC + '?type=iframe' + params
+      };
     }
   },
 
@@ -151,7 +136,7 @@ export const spec = {
     // fires a pixel to confirm a winning bid
     let params = [];
     let endpoint = document.location.search.match(/msq_test=true/) ? BIDDER_URL_TEST : BIDDER_URL_PROD;
-    let paramsToSearchFor = ['cpm', 'size', 'mediaType', 'currency', 'creativeId', 'adUnitCode', 'timeToRespond']
+    let paramsToSearchFor = ['cpm', 'size', 'mediaType', 'currency', 'creativeId', 'adUnitCode', 'timeToRespond', 'auctionId', 'requestId']
     if (bid.hasOwnProperty('mediasquare')) {
       if (bid['mediasquare'].hasOwnProperty('bidder')) { params.push('bidder=' + bid['mediasquare']['bidder']); }
       if (bid['mediasquare'].hasOwnProperty('code')) { params.push('code=' + bid['mediasquare']['code']); }
